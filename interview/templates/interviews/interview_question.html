@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+
+{% block title %}Interview Session | MockPro - Interview.AI{% endblock %}
+
+{% block content %}
+<div class="surface-card mb-4 reveal-item">
+    <div class="d-flex justify-content-between align-items-center flex-wrap gap-2 mb-3">
+        <div>
+            <span class="status-pill info-pill">{{ question.get_category_display }}</span>
+            <span class="badge bg-secondary ms-2">{{ session.get_domain_display }}</span>
+            <span class="text-muted ms-2">Question {{ question_number }} of {{ total_questions }}</span>
+        </div>
+        <div class="timer-pill" data-timer="120">02:00</div>
+    </div>
+    <div class="progress mb-3" role="progressbar">
+        <div class="progress-bar dynamic-progress" data-progress="{{ progress_percent }}"></div>
+    </div>
+    <div class="question-card p-3 rounded-3">
+        <h4 class="fw-bold mb-0">{{ question.question_text }}</h4>
+    </div>
+</div>
+
+<div class="row g-4">
+    <div class="col-lg-8">
+        <div class="surface-card reveal-item">
+            <form method="post">
+                {% csrf_token %}
+                <div class="mb-3">
+                    {{ form.answer_text.label_tag }}
+                    {{ form.answer_text }}
+                    <small class="text-muted">💡 Tip: Use the voice input button for hands-free answering, or type your response manually.</small>
+                </div>
+                <div class="d-flex gap-2 flex-wrap">
+                    <button type="submit" class="btn btn-cta">Save & Continue</button>
+                    <button type="button" class="btn btn-secondary-accent voice-input-btn" data-voice-target="id_answer_text" title="Click to start voice input">🎙 Use Voice Input</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="col-lg-4">
+        <div class="surface-card reveal-item h-100">
+            <h5 class="fw-bold">Answer Tips</h5>
+            <ul class="small text-muted mb-0">
+                <li class="mb-2">Use the STAR format for behavioral examples.</li>
+                <li class="mb-2">Mention tools, decisions, and measurable outcomes.</li>
+                <li>Keep your answer confident, structured, and outcome-focused.</li>
+            </ul>
+        </div>
+    </div>
+</div>
+{% endblock %}

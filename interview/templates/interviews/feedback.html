@@ -1,0 +1,69 @@
+{% extends 'base.html' %}
+{% load filters %}
+
+{% block title %}Feedback | MockPro - Interview.AI{% endblock %}
+
+{% block content %}
+<div class="surface-card mb-4 reveal-item d-flex justify-content-between align-items-center flex-wrap gap-3">
+    <div>
+        <span class="hero-chip mb-2">Performance review</span>
+        <h2 class="fw-bold mb-1">Interview Feedback</h2>
+        <p class="text-muted mb-0">Review your strengths, weak spots, and a sharper version of each response.</p>
+        <div class="mt-2">
+            <span class="badge bg-primary">{{ session.get_domain_display }}</span>
+        </div>
+    </div>
+    <div class="score-badge">{{ session.total_score }}/10</div>
+</div>
+
+<div class="d-flex gap-2 flex-wrap mb-4">
+    <a href="{% url 'dashboard' %}" class="btn btn-cta">Back to Dashboard</a>
+    <a href="{% url 'start_interview' session.resume.id %}" class="btn btn-secondary-accent">Retry Interview</a>
+</div>
+
+{% for question in questions %}
+    <div class="surface-card mb-3 reveal-item">
+        <div class="d-flex justify-content-between align-items-center flex-wrap gap-2 mb-2">
+            <h5 class="fw-bold mb-0">Q{{ forloop.counter }}. {{ question.question_text }}</h5>
+            <span class="status-pill info-pill">{{ question.get_category_display }}</span>
+        </div>
+
+        {% if question.answer %}
+            <p><strong>Your answer:</strong> {{ question.answer.answer_text }}</p>
+            <div class="feedback-list">
+                <div class="feedback-item">
+                    <span class="feedback-number">1.</span>
+                    <strong>Score:</strong> {{ question.answer.score }}/10
+                </div>
+                <div class="feedback-item">
+                    <span class="feedback-number">2.</span>
+                    <strong>Strengths:</strong> {{ question.answer.strengths }}
+                </div>
+                <div class="feedback-item">
+                    <span class="feedback-number">3.</span>
+                    <strong>Weaknesses:</strong> {{ question.answer.weaknesses }}
+                </div>
+                <div class="feedback-item suggested-answer-section">
+                    <span class="feedback-number">4.</span>
+                    <strong>Suggested Answer:</strong>
+                    <div class="suggested-answer-content">
+                        {% if question.answer.suggested_answer %}
+                            {% with lines=question.answer.suggested_answer|split:'\n' %}
+                                {% for line in lines %}
+                                    {% if line|trim %}
+                                        <div class="suggested-line">{{ line|trim }}</div>
+                                    {% endif %}
+                                {% endfor %}
+                            {% endwith %}
+                        {% else %}
+                            <p class="text-muted">No suggested answer available.</p>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        {% else %}
+            <p class="text-muted mb-0">No answer was submitted for this question.</p>
+        {% endif %}
+    </div>
+{% endfor %}
+{% endblock %}

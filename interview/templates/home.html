@@ -1,0 +1,123 @@
+{% extends 'base.html' %}
+
+{% block title %}MockPro - Interview.AI{% endblock %}
+
+{% block content %}
+<section class="hero-shell position-relative overflow-hidden mb-5">
+    <div class="hero-orb orb-one"></div>
+    <div class="hero-orb orb-two"></div>
+    <div class="row align-items-center g-4 position-relative">
+        <div class="col-lg-7">
+            <span class="hero-chip">AI-Powered • Resume-Aware • Instant Feedback</span>
+            <h1 class="display-4 fw-bold mt-3 mb-3"><span class="text-accent">MockPro - Interview.AI</span></h1>
+            <p class="lead text-muted mb-4">Transform your resume into a live mock interview experience with personalized questions, real-time scoring, and recruiter-style improvement advice.</p>
+
+            <div class="d-flex gap-3 flex-wrap mb-4">
+                {% if user.is_authenticated %}
+                    <a href="{% url 'dashboard' %}" class="btn btn-cta btn-lg">Open Dashboard</a>
+                {% else %}
+                    <a href="{% url 'register' %}" class="btn btn-cta btn-lg">Start Free Practice</a>
+                    <a href="{% url 'login' %}" class="btn btn-secondary-accent btn-lg">Sign In</a>
+                {% endif %}
+            </div>
+
+            <div class="row g-3">
+                <div class="col-sm-4">
+                    <div class="hero-metric reveal-item" data-tilt>
+                        <strong>6 AI questions</strong>
+                        <span>per session</span>
+                    </div>
+                </div>
+                <div class="col-sm-4">
+                    <div class="hero-metric reveal-item" data-tilt>
+                        <strong>0–10 score</strong>
+                        <span>with feedback</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-5">
+            <div class="surface-card hero-preview reveal-item" data-tilt>
+                <div class="preview-topbar">
+                    <span></span><span></span><span></span>
+                </div>
+                <div class="preview-pill mb-3">Live interview simulation</div>
+                <h5 class="fw-bold mb-3">Tell me about a time you improved performance in a real project.</h5>
+                <div class="preview-response mb-3">
+                    <small class="text-blue d-block mb-2">Instant AI feedback on live Q&A</small>
+                    <p class="mb-0 text-muted">Turning nervous practice into career-ready performance with live AI-driven feedback and real-time interview simulations.</p>
+                </div>
+                {% comment %} <div class="d-flex justify-content-between align-items-center gap-2 flex-wrap">
+                    <span class="status-pill success-pill">Score: 8.8 / 10</span>
+                </div> {% endcomment %}
+            </div>
+        </div>
+    </div>
+</section>
+
+<section id="features" class="mb-5">
+    <div class="section-heading mb-4">
+        <span class="hero-chip">Why candidates love it</span>
+        <h2 class="mt-3">Stop guessing, start performing. Real-time Q&A drills designed to turn candidates into Professionals.</h2>
+    </div>
+    <div class="row g-4">
+        <div class="col-md-4">
+            <div class="feature-card reveal-item" data-tilt>
+                <div class="feature-icon">📄</div>
+                <h5>Resume intelligence</h5>
+                <p class="text-muted mb-0">Upload a PDF and instantly extract relevant skills to tailor every practice session.</p>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="feature-card reveal-item" data-tilt>
+                <div class="feature-icon">🎯</div>
+                <h5>AI-powered questions</h5>
+                <p class="text-muted mb-0">Get personalized interview questions based on your resume content and skills.</p>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="feature-card reveal-item" data-tilt>
+                <div class="feature-icon">📈</div>
+                <h5>Actionable feedback</h5>
+                <p class="text-muted mb-0">Get scoring, strengths, weaknesses, and suggested answers after each session.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="row g-4 mb-5">
+    <div class="col-lg-6">
+        <div class="surface-card reveal-item h-100">
+            <h4 class="fw-bold mb-3">How it works</h4>
+            <div class="timeline-step"><span>01</span><div><strong>Create your account</strong><p class="text-muted mb-0">Sign up and access your personal interview dashboard.</p></div></div>
+            <div class="timeline-step"><span>02</span><div><strong>Upload your resume</strong><p class="text-muted mb-0">Upload your PDF resume for AI analysis and skill extraction.</p></div></div>
+            <div class="timeline-step"><span>03</span><div><strong>Start the mock interview</strong><p class="text-muted mb-0">Answer personalized questions one by one with text or voice input.</p></div></div>
+            <div class="timeline-step"><span>04</span><div><strong>Improve with AI feedback</strong><p class="text-muted mb-0">Review performance data and refine future answers.</p></div></div>
+        </div>
+    </div>
+    <div class="col-lg-6">
+        <div class="surface-card reveal-item h-100">
+            <h4 class="fw-bold mb-3">Built for modern candidates</h4>
+            <ul class="list-unstyled mb-0 feature-list">
+                 <li>Advanced job-ready drills.</li>
+                <li>High-performance interview prep.</li>
+                <li>Voice input support for spoken answer rehearsal</li>
+                <li>Dark, distraction-free interface with premium hover motion</li>
+                <li>Dashboard tracking to monitor progress over time</li>
+            </ul>
+        </div>
+    </div>
+</section>
+
+<section class="cta-panel reveal-item text-center">
+    <span class="hero-chip mb-3 d-inline-flex">Start your next interview stronger</span>
+    <h2 class="fw-bold mb-3">Practice like it matters — because it does.</h2>
+    <p class="text-muted mb-4">MockPro helps you walk into interviews with sharper stories, clearer answers, and better confidence.</p>
+    {% if user.is_authenticated %}
+        <a href="{% url 'upload_resume' %}" class="btn btn-cta btn-lg">Upload Resume Now</a>
+    {% else %}
+        <a href="{% url 'register' %}" class="btn btn-cta btn-lg">Create Your Account</a>
+    {% endif %}
+</section>
+{% endblock %}

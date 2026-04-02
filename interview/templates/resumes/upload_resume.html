@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+
+{% block title %}Upload Resume | MockPro - Interview.AI{% endblock %}
+
+{% block content %}
+<div class="row g-4">
+    <div class="col-lg-5">
+        <div class="surface-card reveal-item h-100">
+            <span class="hero-chip mb-3">Resume Intelligence</span>
+            <h3 class="fw-bold mb-3">Upload Your Resume</h3>
+            <p class="text-muted">Drop in your PDF and let MockPro generate interview prompts based on your real skills and experience.</p>
+            <form method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="mb-3">
+                    <label class="form-label">PDF Resume</label>
+                    {{ form.file }}
+                    {% if form.file.errors %}
+                        <div class="text-danger small mt-1">{{ form.file.errors|join:', ' }}</div>
+                    {% endif %}
+                </div>
+                <button type="submit" class="btn btn-cta">Upload</button>
+            </form>
+        </div>
+    </div>
+    <div class="col-lg-7">
+';'        <div class="surface-card reveal-item h-100">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <h4 class="fw-bold mb-0">Recent Resumes</h4>
+                <span class="status-pill info-pill">{{ recent_resumes|length }} recent</span>
+            </div>
+            {% if recent_resumes %}
+                {% for resume in recent_resumes %}
+                    <div class="feedback-box mb-3">
+                        <div class="d-flex justify-content-between align-items-start gap-2">
+                            <div>
+                                <div class="fw-semibold">Resume #{{ resume.id }}</div>
+                                <small class="text-muted">{{ resume.uploaded_at|date:"M d, Y H:i" }}</small>
+                                {% if resume.ats_score %}
+                                    <div class="mt-2">
+                                        <span class="badge bg-primary">ATS Score: {{ resume.ats_score }}/100</span>
+                                    </div>
+                                {% endif %}
+                                <p class="mb-0 mt-2 small">Detected skills: {{ resume.parsed_skills|default:"No obvious skills detected yet" }}</p>
+                            </div>
+                            <a href="{% url 'start_interview' resume.id %}" class="btn btn-secondary-accent btn-sm">Start Interview</a>
+                        </div>
+                    </div>
+                {% endfor %}
+            {% else %}
+                <p class="text-muted mb-0">No resumes uploaded yet.</p>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}
